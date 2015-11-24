@@ -1,6 +1,6 @@
 # Tangible Programming
 
-Work in progress. Creating a tangible block-based programming environment for the MIT shape displays.
+Work in progress. Creating a tangible block-based programming environment for the MIT shape displays. See [Tangible Programming](http://andrewringler.github.io/tangible-programming/) for a live demo of this repo.
 
 Forked from [FORMation](https://github.com/xiaosquared/FORMation) by [Xiao Xiao](https://github.com/xiaosquared) and [Donald Derek](https://github.com/DonaldDerek). FORMation is scripting platform for prototyping with the shape displays of the Tangible Media Group, MIT Media Lab. Makes use of the following JavaScript libraries:
 * [3js](http://threejs.org/)
@@ -10,8 +10,8 @@ Forked from [FORMation](https://github.com/xiaosquared/FORMation) by [Xiao Xiao]
 ## How to Run
 
 Live versions of the program:
-* [CooperForm] (http://xiaosquared.com/formation/cooperform.html) (24 x 24)
-* [TransForm] (http://xiaosquared.com/formation/transform.html) (3 islands of 16 x 24)
+* [CooperForm] (http://andrewringler.github.io/tangible-programming/cooperform.html) (24 x 24)
+* [TransForm] (http://andrewringler.github.io/tangible-programming/transform.html) (3 islands of 16 x 24)
 
 If you want to play with the underlying javascript, clone the repo and host it as your own local webserver.
 
