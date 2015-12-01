@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Box Block</title>
+	<script src="../../blockly_compressed.js"></script>
+	<script src="../../blocks_compressed.js"></script>
+	<script src="../../msg/js/en.js"></script>
+	<style>
+		body {
+			background-color: #fff;
+			font-family: sans-serif;
+		}
+		
+		h1 {
+			font-weight: normal;
+			font-size: 140%;
+		}
+	</style>
+</head>
+
+<body>
+	<h1><a href="https://developers.google.com/blockly/">Blockly</a> &gt;
+		<a href="../index.html">Demos</a> &gt; Box Block</h1>
+
+	<div id="blocklyDiv" style="height: 280px; width: 400px;"></div>
+
+	<script>
+		Blockly.Blocks['box'] = {
+			init: function() {
+				this.appendValueInput("width")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT)
+					.appendField("width");
+				this.appendValueInput("depth")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT)
+					.appendField("depth");
+				this.appendValueInput("height")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT)
+					.appendField("height");
+				this.appendValueInput("x")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT)
+					.appendField("x");
+				this.appendValueInput("y")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT)
+					.appendField("y");
+				this.setPreviousStatement(true);
+				this.setNextStatement(true);
+				this.setColour(300);
+				this.setTooltip('');
+				this.setHelpUrl('http://www.example.com/');
+			}
+		};
+		// Blockly.JavaScript['box'] = function(block) {
+		// 	var value_width = Blockly.JavaScript.valueToCode(block, 'width', Blockly.JavaScript.ORDER_ATOMIC);
+		// 	var value_depth = Blockly.JavaScript.valueToCode(block, 'depth', Blockly.JavaScript.ORDER_ATOMIC);
+		// 	var value_height = Blockly.JavaScript.valueToCode(block, 'height', Blockly.JavaScript.ORDER_ATOMIC);
+		// 	var value_x = Blockly.JavaScript.valueToCode(block, 'x', Blockly.JavaScript.ORDER_ATOMIC);
+		// 	var value_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_ATOMIC);
+		// 	// TODO: Assemble JavaScript into code variable.
+		// 	var code = '...';
+		// 	return code;
+		// };
+	</script>
+
+	<xml id="toolbox" style="display: none">
+		<block type="box">
+			<value name="width">
+				<block type="math_number">
+					<field name="NUM">2</field>
+				</block>
+			</value>
+			<value name="depth">
+				<block type="math_number">
+					<field name="NUM">2</field>
+				</block>
+			</value>
+			<value name="height">
+				<block type="math_number">
+					<field name="NUM">1</field>
+				</block>
+			</value>
+			<value name="x">
+				<block type="math_number">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+			<value name="y">
+				<block type="math_number">
+					<field name="NUM">0</field>
+				</block>
+			</value>
+
+
+		</block>
+	</xml>
+
+
+	<script>
+		var workspace = Blockly.inject('blocklyDiv', {
+			media: '../../media/',
+			toolbox: document.getElementById('toolbox')
+		});
+		
+		workspace.addChangeListener(function() {
+			var blocks = workspace.getAllBlocks(); // assembled Blocks
+			for(var i=0; i<blocks.length; i++){
+				var block = blocks[i];
+				if(block.type === "box"){
+					console.log("box block: " + block);					
+				}
+			}
+			
+		});
+	</script>
+
+</body>
+
+</html>
