@@ -31,10 +31,11 @@
     
     <script>
     var createShip = function() {
-      var s = {x: 15, y: 15, r: 1};
+      var s = {x: 12, y: 12, r: 1};
       s.MAX_SPEED = 2.0;
       s.DECELERATION = 0.001;
       s.MAX_DIRECTION = 3.0;
+      s.BULLET_SPEED = 0.5;
       s.THRUST_AMOUNT = 0.1;
       s.direction = 0;
       s.speed = 0;  
@@ -51,6 +52,7 @@
         [1,-1],
         [1,1]
       ];
+      s.bullets = [];
       s.wrap = function() {
         if(s.y < 0){
           s.y = xForm.y_size-1;
@@ -70,6 +72,29 @@
         if(s.speed > s.MAX_SPEED){
           s.speed = s.MAX_SPEED;
         }
+      };
+      s.shoot = function() {
+        /* add a new bullet at current location
+         * pointed in direction of current direction */
+        var bulletSpeed = s.speed + s.BULLET_SPEED;
+        var newBullet = {x: s.x, y: s.y, direction: s.direction, speed: bulletSpeed};
+        s.bullets.push(newBullet);
+      };
+      s.moveBullets = function() {
+        var newBullets = [];
+        for(var i=0; i<s.bullets.length; i++){
+          var bullet = s.bullets[i];
+          var m = s.moveDirection[bullet.direction];
+          bullet.x = bullet.x + (m[0] * bullet.speed);
+          bullet.y = bullet.y + (m[1] * bullet.speed);
+          
+          /* remove bullets that have left the screen, bullets don't wrap 
+             for now..., in real game they do :) */          
+          if(bullet.x < xForm.x_size && bullet.y < xForm.y_size && bullet.x > 0 && bullet.y > 0){
+            newBullets.push(bullet);
+          }
+        }
+        s.bullets = newBullets;
       };
       s.moveShip = function() {
         /* move in the direction the ship is pointing */
@@ -92,18 +117,29 @@
       };
 
       s.draw = function() {
+        // update ship speed
         s.speed = s.speed - s.DECELERATION;
         if(s.speed < 0){
           s.speed = 0;
         }
-        s.moveShip();
         
+        // move ship and bullets
+        s.moveShip();
+        s.moveBullets();
+
+        // draw ship
         var toDraw = s.shipSpec[s.direction];
         for(var i=0; i<toDraw.length; i++){
           var x = Math.round(s.x) + toDraw[i][0];
           var y = Math.round(s.y) + toDraw[i][1];
           xForm.setPinHeight(x,y,1);
-        }
+        };
+        
+        // draw bullets
+        for(var i=0; i<s.bullets.length; i++){
+          var bullet = s.bullets[i];
+          xForm.setPinHeight(Math.round(bullet.x),Math.round(bullet.y),0.5);
+        }        
       };
       return s;
     };
@@ -111,9 +147,10 @@
     var ship = createShip();
 
     var ASTEROIDS = {};
-    ASTEROIDS.up = function() { ship.thrust() };
-    ASTEROIDS.left = function() { ship.counterclockwise() };
-    ASTEROIDS.right = function() { ship.clockwise() };
+    ASTEROIDS.up = function() { ship.thrust(); };
+    ASTEROIDS.left = function() { ship.counterclockwise(); };
+    ASTEROIDS.right = function() { ship.clockwise(); };
+    ASTEROIDS.s = function() { ship.shoot();};
     ASTEROIDS.down = function() { /* nothing */ };
     ASTEROIDS.doIt = function() {
       xForm.clearDisplay();
@@ -396,6 +433,9 @@ return function () {
                 case 40:
                     ASTEROIDS.down();
                     windowY -= 1;
+                break;
+                case 83:
+                    ASTEROIDS.s();
                 break;
                 //Enter runs the code
                 case 13:
